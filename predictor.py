@@ -15,16 +15,16 @@ dataset_train.head()
 training_set = dataset_train.iloc[:,1:2].values
 
 #print(training_set)
-#print(training_set.shape)
+# print(training_set.shape)
 
 scaler = MinMaxScaler(feature_range = (0,1))
 scaled_training_set = scaler.fit_transform(training_set)
 
-# print(scaled_training_set)
+# print(scaled_training_set.shape)
 
 x_train = []
 y_train = []
-for i in range(60,125):
+for i in range(60,1259):
   x_train.append(scaled_training_set[i-60:i, 0])
   y_train.append(scaled_training_set[i, 0])
 x_train = np.array(x_train)
@@ -54,7 +54,7 @@ regressor.add(Dropout(0.2))
 regressor.add(Dense(units=1))
 
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
-regressor.fit(x_train, y_train, epochs=100, batch_size=32)
+regressor.fit(x_train, y_train, epochs=10, batch_size=32)
 
 dataset_test = pd.read_csv("testset.csv")
 actual_stock_price = dataset_test.iloc[:,1:2].values
